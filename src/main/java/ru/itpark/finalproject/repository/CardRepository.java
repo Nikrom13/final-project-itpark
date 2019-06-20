@@ -40,5 +40,16 @@ public class CardRepository {
         );
     }
 
+    public void save(Card card) {
+        if (card.getId() == 0) {
+            jdbcTemplate.update("INSERT INTO cards (cardname, rate, description) VALUES (?, ?, ?)",
+                    card.getCardname(), card.getRate(), card.getDescription()
+            );
+        } else {
+            jdbcTemplate.update("UPDATE cards SET cardname = ?, description = ? WHERE id = ?",
+                    card.getCardname(), card.getDescription(), card.getId()
+            );
+        }
 
+    }
 }
