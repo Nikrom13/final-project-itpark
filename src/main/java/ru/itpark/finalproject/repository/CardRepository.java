@@ -52,4 +52,10 @@ public class CardRepository {
         }
 
     }
+
+    public void removeById (int id){
+        jdbcTemplate.update("DELETE FROM cards WHERE id = ?",
+                id);
+    }
+
 }
