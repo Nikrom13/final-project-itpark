@@ -9,7 +9,7 @@ import ru.itpark.finalproject.service.CardSerrvice;
 @RequestMapping("/")
 @RequiredArgsConstructor
 public class CardController {
-    private final CardSerrvice serrvice;
+  private final CardSerrvice serrvice;
 
 
 }

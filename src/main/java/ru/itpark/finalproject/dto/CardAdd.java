@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CardAdd {
-    private String cardname;
-    private int rate;
-    private String description;
+  private String cardname;
+  private int rate;
+  private String description;
 
 }

@@ -10,52 +10,52 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class CardRepository {
-    private final JdbcTemplate jdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
 
 
-    public List<Card> findAll() {
+  public List<Card> findAll() {
 
-        return jdbcTemplate.query(
-                "SELECT id, cardname, rate, description FROM cards",
-                (rs, i) -> new Card(
-                        rs.getInt("id"),
-                        rs.getString("cardname"),
-                        rs.getInt("rate"),
-                        rs.getString("descpription")
-                )
-        );
+    return jdbcTemplate.query(
+            "SELECT id, cardname, rate, description FROM cards",
+            (rs, i) -> new Card(
+                    rs.getInt("id"),
+                    rs.getString("cardname"),
+                    rs.getInt("rate"),
+                    rs.getString("descpription")
+            )
+    );
+  }
+
+
+  public Card findById(int id) {
+    return jdbcTemplate.queryForObject(
+            "SELECT id, cardname, rate, description FROM cards WHERE id = ?",
+            new Object[]{id},
+            (rs, i) -> new Card(
+                    rs.getInt("id"),
+                    rs.getString("cardname"),
+                    rs.getInt("rate"),
+                    rs.getString("descpription")
+            )
+    );
+  }
+
+  public void save(Card card) {
+    if (card.getId() == 0) {
+      jdbcTemplate.update("INSERT INTO cards (cardname, rate, description) VALUES (?, ?, ?)",
+              card.getCardname(), card.getRate(), card.getDescription()
+      );
+    } else {
+      jdbcTemplate.update("UPDATE cards SET cardname = ?, description = ? WHERE id = ?",
+              card.getCardname(), card.getDescription(), card.getId()
+      );
     }
 
+  }
 
-    public Card findById(int id) {
-        return jdbcTemplate.queryForObject(
-                "SELECT id, cardname, rate, description FROM cards WHERE id = ?",
-                new Object[]{id},
-                (rs, i) -> new Card(
-                        rs.getInt("id"),
-                        rs.getString("cardname"),
-                        rs.getInt("rate"),
-                        rs.getString("descpription")
-                )
-        );
-    }
-
-    public void save(Card card) {
-        if (card.getId() == 0) {
-            jdbcTemplate.update("INSERT INTO cards (cardname, rate, description) VALUES (?, ?, ?)",
-                    card.getCardname(), card.getRate(), card.getDescription()
-            );
-        } else {
-            jdbcTemplate.update("UPDATE cards SET cardname = ?, description = ? WHERE id = ?",
-                    card.getCardname(), card.getDescription(), card.getId()
-            );
-        }
-
-    }
-
-    public void removeById (int id){
-        jdbcTemplate.update("DELETE FROM cards WHERE id = ?",
-                id);
-    }
+  public void removeById(int id) {
+    jdbcTemplate.update("DELETE FROM cards WHERE id = ?",
+            id);
+  }
 
 }

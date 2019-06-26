@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Card {
-  private int id;
-  private String cardname;
-  private int rate;
-  private String description;
+public class Registration {
+  private String username;
+  private String password;
+  private String confirm;
 }
