@@ -12,7 +12,7 @@
     <artifactId>finalproject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>finalproject</name>
-    <description>card holdre project</description>
+    <description>card holder project</description>
 
     <properties>
         <java.version>12</java.version>

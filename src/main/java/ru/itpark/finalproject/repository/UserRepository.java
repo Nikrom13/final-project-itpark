@@ -2,7 +2,10 @@ package ru.itpark.finalproject.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
@@ -61,8 +64,63 @@ public class UserRepository {
   }
 
   public void save(User user) {
+    if (user.getId() == 0) {
 
+      KeyHolder keyHolder = new GeneratedKeyHolder();
+      MapSqlParameterSource params = new MapSqlParameterSource();
+      params.addValues(Map.of(
+              "username", user.getUsername(),
+              "password", user.getPassword(),
+              "enabled", user.isEnabled(),
+              "account_non_expired", user.isAccountNonExpired(),
+              "account_non_locked", user.isAccountNonLocked(),
+              "credentials_non_expired", user.isCredentialsNonExpired()
+      ));
+
+      template.update("INSTERT INTO users (username, password, endbled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (:username, :password, :endbled, :account_non_expired, :account_non_locked, :credentials_non_expired)",
+              params, keyHolder
+      );
+
+      int id = keyHolder.getKey().intValue();
+
+      for (GrantedAuthority authority : user.getAuthorities()) {
+        template.update(
+                "INSERT INTO authorities (user_id, authority) VALUES (:user_id, :authority)",
+                Map.of(
+                        "user_id", id,
+                        "authority", authority.getAuthority()
+                )
+        );
+      }
+
+      return;
+    }
+
+    template.update("UPDATE users SET username = :username, password = :password, enabled = :enabled, account_non_expired = :account_non_expired, account_non_locked = :account_non_locked, credentials_non_expired = :credentials_non_expired WHERE user_id = :user_id",
+            Map.of(
+                    "user_id", user.getId(),
+                    "username", user.getUsername(),
+                    "password", user.getPassword(), // пароль уже должен быть шифрованный
+                    "enabled", user.isEnabled(),
+                    "account_non_expired", user.isAccountNonExpired(),
+                    "account_non_locked", user.isAccountNonLocked(),
+                    "credentials_non_expired", user.isCredentialsNonExpired()
+            )
+    );
+    template.update(
+            "DELETE FROM authorities WHERE user_id = :user_id",
+            Map.of("user_id", user.getId())
+    );
+
+    // сохраняем его права
+    for (GrantedAuthority authority : user.getAuthorities()) {
+      template.update(
+              "INSERT INTO authorities (user_id, authority) VALUES (:user_id, :authority)",
+              Map.of(
+                      "user_id", user.getId(),
+                      "authority", authority.getAuthority()
+              )
+      );
+    }
   }
-
-
 }
