@@ -77,8 +77,10 @@ public class UserRepository {
               "credentials_non_expired", user.isCredentialsNonExpired()
       ));
 
-      template.update("INSTERT INTO users (username, password, endbled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (:username, :password, :endbled, :account_non_expired, :account_non_locked, :credentials_non_expired)",
-              params, keyHolder
+      template.update(
+              "INSERT INTO users (username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (:username, :password, :enabled, :account_non_expired, :account_non_locked, :credentials_non_expired)",
+              params,
+              keyHolder
       );
 
       int id = keyHolder.getKey().intValue();

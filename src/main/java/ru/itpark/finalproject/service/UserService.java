@@ -3,6 +3,8 @@ package ru.itpark.finalproject.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +16,10 @@ import ru.itpark.finalproject.domain.Registration;
 import ru.itpark.finalproject.domain.User;
 import ru.itpark.finalproject.repository.UserRepository;
 
-import java.util.List;
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 @Service
 @Transactional
@@ -22,6 +27,7 @@ import java.util.List;
 public class UserService implements UserDetailsService {
   private final UserRepository repository;
   private final PasswordEncoder passwordEncoder;
+  private final NamedParameterJdbcTemplate template;
 
 
   @Override
@@ -34,6 +40,21 @@ public class UserService implements UserDetailsService {
   }
 
   public void register(Registration data) {
+
+    List<String> names = template.query("SELECT username FROM users", new RowMapper<String>() {
+              @Override
+              public String mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getString("username");
+              }
+            }
+//            (rs, i) -> rs.getString("username")
+    );
+
+    if (names.contains(data.getUsername())) {
+      throw new RuntimeException("Такое имя пользщователя уже существует");
+    }
+
+
     if (!data.getPassword().equals(data.getConfirm())) {
       throw new RuntimeException("Пароли не совпадают");
     }
@@ -48,5 +69,9 @@ public class UserService implements UserDetailsService {
             true,
             true
     ));
+
+
   }
+
+
 }
