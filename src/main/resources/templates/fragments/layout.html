@@ -9,23 +9,23 @@
 </head>
 <body>
 <div data-th-fragment="logoutFragment">
-    <form
+    <form class="btn btn-link"
             data-th-if="${#authorization.expression('isAuthenticated()')}"
             data-th-action="@{/logout}" method="post">
         <button>Выйти</button>
     </form>
 </div>
 <div data-th-fragment="registerFragment">
-    <a
+    <a class="btn btn-link"
             data-th-if="${#authorization.expression('isAnonymous()')}"
             data-th-href="@{/register}">Регистрация</a>
 </div>
 <div data-th-fragment="loginFragment">
-    <a data-th-if="${#authorization.expression('isAnonymous()')}"
-       data-th-href="@{/login}">Войти</a>
+    <a  class="btn btn-link"  data-th-if="${#authorization.expression('isAnonymous()')}"
+        data-th-href="@{/login}">Войти</a>
 </div>
 <div data-th-fragment="adminFragment">
-    <a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
+    <a class="btn btn-link" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
        data-th-href="@{/admin}">Панель управления</a>
 </div>
 </body>

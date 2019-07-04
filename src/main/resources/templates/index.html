@@ -6,15 +6,38 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 <body>
-<div>
-    <div data-th-include="/fragments/layout :: registerFragment"></div>
-    <div data-th-include="/fragments/layout :: loginFragment"></div>
-    <div data-th-include="/fragments/layout :: logoutFragment"></div>
-    <div data-th-include="/fragments/layout :: adminFragment"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div align="right">
+                <div data-th-include="/fragments/layout :: registerFragment"></div>
+                <div data-th-include="/fragments/layout :: loginFragment"></div>
+                <div data-th-include="/fragments/layout :: logoutFragment"></div>
+                <div data-th-include="/fragments/layout :: adminFragment"></div>
+            </div>
+
+            <h1 align="center">Добро пожаловать</h1>
+        </div>
+    </div>
 </div>
 
-<h1>Главная страница</h1>
+<div class="row">
+    <div class="col">
+        <ul class="list-group">
+            <li class="list-group-item" data-th-each="card : ${cards}">
+                <a data-th-href="@{/{id}(id=${card.getId()})}">
+                    [[${card.getCardname()}]]
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 </body>
 </html>

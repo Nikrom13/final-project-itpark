@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CardSerrvice {
+public class CardService {
     private final CardRepository repository;
 
     public List<Card> findAll() {
@@ -30,7 +30,11 @@ public class CardSerrvice {
     }
 
     public void add(CardAdd dto) {
-        var card = new Card(0, dto.getCardname(),dto.getRate(), dto.getDescription());
+        var card = new Card(
+                0,
+                dto.getCardname(),
+                dto.getRate(),
+                dto.getDescription());
         save(card);
     }
 
