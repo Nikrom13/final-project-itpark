@@ -20,7 +20,7 @@ public class CardController {
     return "admin/add-card";
   }
 
-  @PostMapping("@(/asdasd)")
+  @PostMapping
   public String addCard(@ModelAttribute CardAdd dto){
     service.add(dto);
     return "redirect:/";
