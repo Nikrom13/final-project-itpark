@@ -27,17 +27,25 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col">
-        <ul class="list-group">
-            <li class="list-group-item" data-th-each="card : ${cards}">
-                <a data-th-href="@{/{id}(id=${card.getId()})}">
-                    [[${card.getCardname()}]]
-                </a>
-            </li>
-        </ul>
+
+<form align="center">
+    <div class="row mt-3">
+        <div align="center" class="card text-white" data-th-each="card : ${cards}">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPtrPDdWd_X5VP2lYeiRIyI72CCM_aKk-eaMuo0rypMqALC8b"
+                 class="card-img"
+                 style="width: 18rem;">
+            <a data-th-href="@{/{id}(id=${card.getId()})}">
+                <div class="card-img-overlay">
+                    <h5 class="card-title">[[${card.getCardname()}]]</h5>
+                    <p class="card-text">[[${card.getRate()}]]</p>
+                    <p class="card-text">[[${card.getDescription()}]]</p>
+                </div>
+            </a>
+        </div>
     </div>
-</div>
+</form>
+
+
 
 </body>
 </html>

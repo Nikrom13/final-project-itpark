@@ -25,7 +25,7 @@ public class CardRepository {
                     rs.getInt("id"),
                     rs.getString("cardname"),
                     rs.getInt("rate"),
-                    rs.getString("descpription")
+                    rs.getString("description")
             )
     );
   }
