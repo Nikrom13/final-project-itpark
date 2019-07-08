@@ -32,10 +32,14 @@ public class CardService {
     public void add(CardAdd dto) {
         var card = new Card(
                 0,
-                dto.getCardname(),
+                dto.getName(),
                 dto.getRate(),
                 dto.getDescription());
         save(card);
     }
 
+    public void editById(int id, CardAdd data) {
+        Card card = new Card(id,data.getName(),data.getRate(), data.getDescription());
+        repository.save(card);
+    }
 }

@@ -33,7 +33,7 @@ public class CardRepository {
 
   public Card findById(int id) {
     return template.queryForObject(
-            "SELECT id, cardname, rate, description FROM cards WHERE id = :id, cardname = :cardname, rate = :rate, description = :description",
+            "SELECT id, cardname, rate, description FROM cards WHERE id = :id",
             Map.of("id", id), new RowMapper<Card>() {
               @Override
               public Card mapRow(ResultSet rs, int i) throws SQLException {
@@ -41,7 +41,7 @@ public class CardRepository {
                         rs.getInt("id"),
                         rs.getString("cardname"),
                         rs.getInt("rate"),
-                        rs.getString("descpription")
+                        rs.getString("description")
                 );
               }
             }
@@ -58,9 +58,12 @@ public class CardRepository {
               )
       );
     } else {
-      template.update("UPDATE cards SET cardname = :cardname, description = description WHERE id = :id",
+      template.update("UPDATE cards SET cardname = :cardname, rate = :rate, description = :description WHERE id = :id",
               Map.of(
-                      "id", card.getId()
+                      "id", card.getId(),
+                      "cardname", card.getCardname(),
+                      "rate", card.getRate(),
+                      "description", card.getDescription()
               )
       );
     }
