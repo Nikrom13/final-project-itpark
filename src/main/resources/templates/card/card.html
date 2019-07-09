@@ -34,7 +34,7 @@
 </div>
 
 <form data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-action="@{/remove/{id}(id = ${card.getId()})}" method="post">
-    <button class="btn btn-danger">Remoce Card </button>
+    <button class="btn btn-danger">Remove Card </button>
 </form>
 
 <a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-href="@{/edit/{id}(id = ${card.getId()})}" class="btn btn-primary">Edit</a>

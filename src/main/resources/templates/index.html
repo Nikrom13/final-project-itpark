@@ -15,7 +15,23 @@
 <div class="container">
     <div class="row">
         <div class="col">
-
+            <div align="right">
+                <a class="btn btn-link" data-th-if="${#authorization.expression('isAnonymous()')}"
+                             data-th-href="@{/register}">Регистрация</a>
+                <a  class="btn btn-link"  data-th-if="${#authorization.expression('isAnonymous()')}"
+                        data-th-href="@{/login}">Войти</a>
+                <form class="btn btn-link"
+                        data-th-if="${#authorization.expression('isAuthenticated()')}"
+                        data-th-action="@{/logout}" method="post">
+                    <button>Выйти</button>
+                </form>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                   <a class="btn btn-link" data-th-if="${#authorization.expression('isAuthenticated()')}"
+                       data-th-href="@{/personalArea}">Личный кабинет</a>
+                   <a class="btn btn-link" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                       data-th-href="@{/admin}">Панель управления</a>
+                </div>
+            </div>
 
             <h1 align="center">Добро пожаловать</h1>
 
