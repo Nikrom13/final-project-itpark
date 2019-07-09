@@ -15,3 +15,8 @@ notifications:
       - 13nikrom13@gmail.com
     on_failure: always
     on_success: never
+
+deploy:
+  provider: heroku
+  api_key: $HEROKU_KEY
+  app: final-project-itpark
