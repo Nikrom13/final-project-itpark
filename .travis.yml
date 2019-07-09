@@ -1,6 +1,9 @@
 language: java
 jdk: oraclejdk12
 
+before_install:
+  -chmod=+x ./mvnw
+
 script: mvn -e verify
 
 after_success:
