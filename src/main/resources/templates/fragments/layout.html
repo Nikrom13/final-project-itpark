@@ -16,9 +16,8 @@
     </form>
 </div>
 <div data-th-fragment="registerFragment">
-    <a class="btn btn-link"
-            data-th-if="${#authorization.expression('isAnonymous()')}"
-            data-th-href="@{/register}">Регистрация</a>
+    <a class="btn btn-link" data-th-if="${#authorization.expression('isAnonymous()')}"
+             data-th-href="@{/register}">Регистрация</a>
 </div>
 <div data-th-fragment="loginFragment">
     <a  class="btn btn-link"  data-th-if="${#authorization.expression('isAnonymous()')}"
