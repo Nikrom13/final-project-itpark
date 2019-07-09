@@ -1,0 +1,14 @@
+language: java
+jdk: oraclejdk12
+
+script: mvn -e verify
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    recipients:
+      - 13nikrom13@gmail.com
+    on_failure: always
+    on_success: never

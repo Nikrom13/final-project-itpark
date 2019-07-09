@@ -28,5 +28,9 @@
     <a class="btn btn-link" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
        data-th-href="@{/admin}">Панель управления</a>
 </div>
+<div data-th-fragment="personalAreaFragment">
+    <a class="btn btn-link" data-th-if="${#authorization.expression('isAuthenticated()')}"
+       data-th-href="@{/personalArea}">Личный кабинет</a>
+</div>
 </body>
 </html>
