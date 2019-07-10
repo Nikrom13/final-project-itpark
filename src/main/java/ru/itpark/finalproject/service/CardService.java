@@ -22,12 +22,12 @@ public class CardService {
         return repository.findById(id);
     }
 
-    public void save(Card card){
+    public void save(Card card) {
         repository.save(card);
     }
 
-    public void removeById (int id){
-       repository.removeById(id);
+    public void removeById(int id) {
+        repository.removeById(id);
     }
 
     public void add(CardAdd dto) {
@@ -40,19 +40,11 @@ public class CardService {
     }
 
     public void editById(int id, CardAdd data) {
-        Card card = new Card(id,data.getName(),data.getRate(), data.getDescription());
+        Card card = new Card(id, data.getName(), data.getRate(), data.getDescription());
         repository.save(card);
     }
 
     public List<Card> findByRequest(String search) {
-
-//        List<Card> result = repository.findByRequest(search);
-//        result.toArray();
-//        for (Card card : result) {
-//             if (card.getCardname().contains(search))
-//
-//        }
-
         return repository.findByRequest(search);
     }
 }
