@@ -74,4 +74,15 @@ public class CardRepository {
     template.update("DELETE FROM cards WHERE id = :id", Map.of("id", id));
   }
 
+    public List<Card> findByRequest(String search) {
+      return template.query("SELECT id, cardname, rate, description FROM cards WHERE cardname = :search",
+              Map.of("search", search),
+              (rs, i) -> new Card(
+                      rs.getInt("id"),
+                      rs.getString("cardname"),
+                      rs.getInt("rate"),
+                      rs.getString("description")
+              )
+      );
+    }
 }

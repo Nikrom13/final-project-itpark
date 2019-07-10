@@ -6,6 +6,7 @@ import ru.itpark.finalproject.domain.Card;
 import ru.itpark.finalproject.dto.CardAdd;
 import ru.itpark.finalproject.repository.CardRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,5 +42,17 @@ public class CardService {
     public void editById(int id, CardAdd data) {
         Card card = new Card(id,data.getName(),data.getRate(), data.getDescription());
         repository.save(card);
+    }
+
+    public List<Card> findByRequest(String search) {
+
+//        List<Card> result = repository.findByRequest(search);
+//        result.toArray();
+//        for (Card card : result) {
+//             if (card.getCardname().contains(search))
+//
+//        }
+
+        return repository.findByRequest(search);
     }
 }
