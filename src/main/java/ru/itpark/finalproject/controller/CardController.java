@@ -37,4 +37,20 @@ public class CardController {
     public String back() {
         return "redirect:/";
     }
+
+    @GetMapping("/regCard/{id}")
+    public String regCard(@PathVariable int id,Model model) {
+        var card = service.findById(id);
+        model.addAttribute("card", card);
+        return "card/reg-card";
+    }
+
+    @PostMapping("/reg-card/{id}")
+    public String registrationCard(@PathVariable int id, Model model){
+        var card = service.findById(id);
+//        service.registerCard(card);
+        model.addAttribute("card", card);
+        return "redirect:/personalArea";
+    }
+
 }

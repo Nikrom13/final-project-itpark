@@ -9,6 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itpark.finalproject.domain.User;
 import ru.itpark.finalproject.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @SpringBootApplication
@@ -30,8 +33,8 @@ public class FinalprojectApplication {
                             true,
                             true,
                             true,
-                            true
-
+                            true,
+                            Collections.emptyList()
                     )
             );
 
@@ -44,7 +47,8 @@ public class FinalprojectApplication {
                             true,
                             true,
                             true,
-                            true
+                            true,
+                            Collections.emptyList()
                     )
             );
         };

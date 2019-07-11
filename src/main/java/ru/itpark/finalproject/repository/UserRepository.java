@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Repository;
+import ru.itpark.finalproject.domain.Card;
 import ru.itpark.finalproject.domain.User;
 
 import java.sql.ResultSet;
@@ -39,11 +40,13 @@ public class UserRepository {
                         rs.getBoolean("enabled"),
                         rs.getBoolean("account_non_expired"),
                         rs.getBoolean("account_non_locked"),
-                        rs.getBoolean("credentials_non_expired")
+                        rs.getBoolean("credentials_non_expired"),
+                        Collections.emptyList() //:TODO точно должен возвращаться пустой лист?
                 );
               }
             }
     );
+
 
     List<GrantedAuthority> authorities = template.query(
             "SELECT authority FROM authorities WHERE user_id = :user_id",

@@ -67,7 +67,8 @@ public class UserService implements UserDetailsService {
             true,
             true,
             true,
-            true
+            true,
+            Collections.emptyList()
     ));
 
 

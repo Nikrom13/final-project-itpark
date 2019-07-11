@@ -1,6 +1,7 @@
 package ru.itpark.finalproject.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 import ru.itpark.finalproject.domain.Card;
 import ru.itpark.finalproject.dto.CardAdd;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CardService {
     private final CardRepository repository;
+    private final NamedParameterJdbcTemplate template;
 
     public List<Card> findAll() {
         return repository.findAll();
@@ -47,4 +49,8 @@ public class CardService {
     public List<Card> findByRequest(String search) {
         return repository.findByRequest(search);
     }
+
+//    public void registerCard(Card card) {
+//        template.query("SET INTO ");
+//    }
 }

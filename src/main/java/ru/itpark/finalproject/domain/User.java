@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,4 +21,5 @@ import java.util.Collection;
     private boolean accountNonExpired; // isAccountNonExpired() делает @Data
     private boolean accountNonLocked; // isAccountNonLocked
     private boolean credentialsNonExpired;
+    private Collection<UserCards> userCards;
 }

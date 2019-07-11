@@ -79,7 +79,7 @@ public class CardRepository {
 //        List<Card> result = new ArrayList<>();
 //        List<Card> cards = template.query("SELECT id, cardname, rate, description FROM cards WHERE LOWER (cardname) LIKE :search",
         return template.query("SELECT id, cardname, rate, description FROM cards WHERE LOWER (cardname) LIKE :search",
-                Map.of("search", search.toLowerCase()),
+                Map.of("search", "%"+search.toLowerCase()+"%"),
                 (rs, i) -> new Card(
                         rs.getInt("id"),
                         rs.getString("cardname"),

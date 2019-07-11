@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+             <title>Registration Card</title>
+</head>
+<body>
+  <h1 align="center">[[${card.getCardname()}]]</h1>
+
+
+  <form  data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-action="@{/reg-card/{id}(id = ${card.getId()})}" method="post">
+      <button class="btn btn-danger">Оформить </button>
+  </form>
+
+</body>
+</html>

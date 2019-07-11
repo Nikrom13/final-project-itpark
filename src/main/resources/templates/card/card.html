@@ -40,5 +40,6 @@
 <a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-href="@{/edit/{id}(id = ${card.getId()})}" class="btn btn-primary">Edit</a>
 
 <a data-th-href="@{/back}" class="btn btn-primary">Back to card list</a>
+<a data-th-href="@{/regCard/{id}(id=${card.getId()})}" class="btn btn-primary">Registration card</a>
 </body>
 </html>
