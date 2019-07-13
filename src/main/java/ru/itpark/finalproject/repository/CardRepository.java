@@ -76,8 +76,6 @@ public class CardRepository {
     }
 
     public List<Card> findByRequest(String search) {
-//        List<Card> result = new ArrayList<>();
-//        List<Card> cards = template.query("SELECT id, cardname, rate, description FROM cards WHERE LOWER (cardname) LIKE :search",
         return template.query("SELECT id, cardname, rate, description FROM cards WHERE LOWER (cardname) LIKE :search",
                 Map.of("search", "%"+search.toLowerCase()+"%"),
                 (rs, i) -> new Card(
@@ -88,16 +86,32 @@ public class CardRepository {
                 )
         );
 
-//        for (Card card : cards) {
-//            if (card.getCardname().isEmpty()) {
-//                continue;
-//            }
-//
-//            if (card.getCardname().toLowerCase().contains(search.toLowerCase())) {
-//                result.add(card);
-//            }
-//
-//        }
-//        return result;
+    }
+
+    public List<Card> findUserCards(int id) {
+
+        List<Integer> cadsId = template.query("SELECT card_id FROM userCards WHERE user_id = :id",
+                Map.of(
+                        "id", id
+                ), (resultSet, i) -> new Integer(
+                        resultSet.getInt("card_id")
+                )
+        );
+
+        List<Card> result = new ArrayList<>();
+        for (Integer integer : cadsId) {
+           Card card = template.queryForObject(
+                    "SELECT id, cardname, rate, description FROM cards WHERE id = :id",
+                    Map.of("id", integer), (rs, i) -> new Card(
+                            rs.getInt("id"),
+                            rs.getString("cardname"),
+                            rs.getInt("rate"),
+                            rs.getString("description")
+                    )
+            );
+
+            result.add(card);
+        }
+        return result;
     }
 }

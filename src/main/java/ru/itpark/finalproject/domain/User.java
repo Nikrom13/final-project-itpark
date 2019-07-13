@@ -21,5 +21,5 @@ import java.util.List;
     private boolean accountNonExpired; // isAccountNonExpired() делает @Data
     private boolean accountNonLocked; // isAccountNonLocked
     private boolean credentialsNonExpired;
-    private Collection<UserCards> userCards;
+    private List<UserCards> userCards;
 }

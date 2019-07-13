@@ -10,9 +10,11 @@
   <h1 align="center">[[${card.getCardname()}]]</h1>
 
 
-  <form  data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-action="@{/reg-card/{id}(id = ${card.getId()})}" method="post">
+  <form  data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/reg-card/{id}(id = ${card.getId()})}" method="post">
       <button class="btn btn-danger">Оформить </button>
   </form>
+
+
 
 </body>
 </html>

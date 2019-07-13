@@ -15,6 +15,7 @@ import ru.itpark.finalproject.domain.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class UserRepository {
                         rs.getBoolean("account_non_expired"),
                         rs.getBoolean("account_non_locked"),
                         rs.getBoolean("credentials_non_expired"),
-                        Collections.emptyList() //:TODO точно должен возвращаться пустой лист?
+                        new LinkedList<>() //:TODO точно должен возвращаться пустой лист?
                 );
               }
             }
