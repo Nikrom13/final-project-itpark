@@ -93,7 +93,7 @@ public class CardRepository {
         List<Integer> cadsId = template.query("SELECT card_id FROM userCards WHERE user_id = :id",
                 Map.of(
                         "id", id
-                ), (resultSet, i) -> new Integer(
+                ), (resultSet, i) ->(
                         resultSet.getInt("card_id")
                 )
         );
@@ -115,3 +115,4 @@ public class CardRepository {
         return result;
     }
 }
+//select * from cards as c join userCards as uc on c.id=uc.card_id

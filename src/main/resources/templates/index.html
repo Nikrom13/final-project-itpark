@@ -11,24 +11,31 @@
 
 </head>
 <body>
-<form>
-                <div class="row">
-                    <div class="col">
-                        <input class="form-control" data-th-value="${search}" name="search" type="search"
-                               placeholder="Search">
-                    </div>
-                </div>
-</form>
-                <
+
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <a class="navbar-brand">Navbar</a>
+
+  <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}">
+    <input class="form-control mr-sm-2" type="search" data-th-value="${search}" name="search" placeholder="Поиск" aria-label="Search" >
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+  </form>
+
+  <form class="form-inline" data-th-if="${#authorization.expression('isAnonymous()')}">
+      <a class="btn btn-sm btn-outline-secondary mr-sm-2" data-th-href="@{/register}">Зарегистрироваться</a>
+      <a class="btn btn-outline-success" data-th-href="@{/login}" >Войти</a>
+  </form>
+
+  <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+       <button class="btn btn-outline-danger">Выйти</button>
+  </form>
+</nav>
+
 
 <div class="container">
     <div class="row">
         <div class="col">
             <div align="right">
-                <a class="btn btn-link" data-th-if="${#authorization.expression('isAnonymous()')}"
-                             data-th-href="@{/register}">Регистрация</a>
-                <a  class="btn btn-link"  data-th-if="${#authorization.expression('isAnonymous()')}"
-                        data-th-href="@{/login}">Войти</a>
+
                 <form class="btn btn-link"
                         data-th-if="${#authorization.expression('isAuthenticated()')}"
                         data-th-action="@{/logout}" method="post">
@@ -47,6 +54,25 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+    <div class="col-md-6">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown button
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </div>
+
+</div>
+    </div>
+    </div>
+
 
 <div class="container">
     <div class="col">
@@ -88,6 +114,8 @@
     </div>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
