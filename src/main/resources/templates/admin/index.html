@@ -1,18 +1,125 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <style>
+            :root{
+                --primary:#03A9F4;
+                --secondary:#29B6F6;
+                --terciary:#B2EBF2;
+            }
+
+            nav{
+                padding: 0 10px 0 10px;
+                background-color: var(--primary);
+            }
+
+            nav .right{
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+
+
+
+            .nav-wrapper form{
+                margin: auto;
+                width: 50%;
+            }
+
+            .nav-wrapper .input-field{
+                padding-top: 7px;
+            }
+
+            .nav-wrapper form #search{
+                height: 50px;
+            }
+
+
+            nav .right img{
+                margin: 17px;
+                height: 30px;
+                width: 30px;
+                border: 2px solid white;
+                cursor: pointer;
+            }
+
+            nav .right .imgProfil a{
+                height: 64px;
+            }
+
+
+        </style>
+  </head>
 <body>
-<div align="center" class="alert alert-success mt-3" role="alert">
-   Я тут самый главный
-</div>
-    <a data-th-href="@{/add-card}" class="btn btn-primary">Add card</a>
+
+<nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">РомБанк</a>
+      <form data-th-if="${#authorization.expression('isAuthenticated()')}">
+            <div class="input-field">
+                <input id="search" type="search" name="search" data-th-value="${search}" >
+                   <label class="label-icon" for="search"><i class="material-icons" >search</i></label>
+                   <i class="material-icons">close</i>
+            </div>
+      </form>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-href="@{/add-card}" >Добавить карту</a></li>
+        <li><a data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-href="@{/personalArea}">Личный кабинет</a></li>
+        <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('isAnonymous()')}" data-th-href="@{/login}" >Войти</a></li>
+        <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a></li>
+        <li>
+            <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+               <button class="btn btn-outline-danger">Выйти</button>
+            </form>
+        </li>
+      </ul>
+    </div>
+ </nav>
+
+    <div id="modal1" class="modal">
+     <div class="row">
+      <form class="col s12">
+       <div class="row">
+        <div class="input-field col s6">
+         <input id="input_text" type="text" data-length="10">
+         <label for="input_text">Input text</label>
+         </div>
+          <div class="input-field col s6">
+           <input id="input_text" type="text" data-length="10">
+           <label for="input_text">Input text</label>
+          </div>
+         </div>
+         <div class="row">
+          <div class="input-field col s12">
+           <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+           <label for="textarea2">Textarea</label>
+          </div>
+         </div>
+      </form>
+     </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $('.modal').modal();
+      });
+    </script>
+    <script >
+    $(document).ready(function() {
+    $('input#input_text, textarea#textarea2').characterCounter();
+    });
+    </script>
 </body>
 </html>
