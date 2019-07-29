@@ -28,7 +28,10 @@
                 right: 0px;
             }
 
-
+            .nav-wrapper .exit-button{
+                        top: -2px;
+                        right: 20px;
+            }
 
             .nav-wrapper form{
                 margin: auto;
@@ -42,7 +45,6 @@
             .nav-wrapper form #search{
                 height: 50px;
             }
-
 
             nav .right img{
                 margin: 17px;
@@ -72,14 +74,13 @@
             </div>
       </form>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-href="@{/add-card}" >Добавить карту</a></li>
+        <li><a class="waves-effect waves-light btn modal-trigger" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" href="#modal1"  >Добавить карту</a></li>
         <li><a data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-href="@{/personalArea}">Личный кабинет</a></li>
         <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('isAnonymous()')}" data-th-href="@{/login}" >Войти</a></li>
-        <li><a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a></li>
         <li>
-            <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
-               <button class="btn btn-outline-danger">Выйти</button>
-            </form>
+           <form  data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+            <button class=" exit-button waves-effect waves-light btn">Выйти</button>
+           </form>
         </li>
       </ul>
     </div>
@@ -87,22 +88,25 @@
 
     <div id="modal1" class="modal">
      <div class="row">
-      <form class="col s12">
+      <form class="col s12" data-th-action="@{/add-card}" method="post">
        <div class="row">
         <div class="input-field col s6">
-         <input id="input_text" type="text" data-length="10">
-         <label for="input_text">Input text</label>
+         <input name="name" id="input_text" type="text" data-length="15" required>
+         <label for="input_text">Название карты</label>
          </div>
           <div class="input-field col s6">
-           <input id="input_text" type="text" data-length="10">
-           <label for="input_text">Input text</label>
+           <input name="rate" id="input_text" type="text" data-length="2" required>
+           <label for="input_text">Процентная ставка</label>
           </div>
          </div>
          <div class="row">
           <div class="input-field col s12">
-           <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
-           <label for="textarea2">Textarea</label>
+           <textarea name="description" id="textarea2" class="materialize-textarea" data-length="300"></textarea>
+           <label for="textarea2">Описание</label>
           </div>
+         </div>
+         <div>
+          <button class="btn waves-effect waves-light right" type="submit">Добавить</button>
          </div>
       </form>
      </div>

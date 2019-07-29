@@ -27,11 +27,15 @@
     }
 
 
-
     .nav-wrapper form{
         margin: auto;
         width: 50%;
     }
+
+    .nav-wrapper .exit-button{
+            top: -2px;
+            right: 20px;
+        }
 
     .nav-wrapper .input-field{
         padding-top: 7px;
@@ -40,7 +44,6 @@
     .nav-wrapper form #search{
         height: 50px;
     }
-
 
     nav .right img{
         margin: 17px;
@@ -78,8 +81,8 @@
                                   data-th-href="@{/personalArea}">Личный кабинет</a></li>
         <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('isAnonymous()')}" data-th-href="@{/login}" >Войти</a></li>
         <li>
-            <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
-               <button class="btn btn-outline-danger">Выйти</button>
+            <form  data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+               <button class=" exit-button waves-effect waves-light btn">Выйти</button>
             </form>
         </li>
       </ul>
