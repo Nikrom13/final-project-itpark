@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
     );
 
     if (names.contains(data.getUsername())) {
-      throw new RuntimeException("Такое имя пользщователя уже существует");
+      throw new RuntimeException("Такое имя пользователя уже существует");
     }
 
 

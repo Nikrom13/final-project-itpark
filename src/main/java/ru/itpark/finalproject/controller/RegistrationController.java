@@ -31,6 +31,6 @@ public class RegistrationController {
       return "register";
     }
 
-    return "redirect:/login?register"; // Чтобы можно было понять, что пришли с регистрации
+    return "redirect:/login?register";
   }
 }

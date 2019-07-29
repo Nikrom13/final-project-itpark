@@ -11,67 +11,44 @@
 
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" data-th-href="@{/back}">РомБанк</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-  <a class="navbar-brand">Navbar</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-th-if="${#authorization.expression('isAuthenticated()')}"
+                   data-th-href="@{/personalArea}">Личный кабинет</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                   data-th-href="@{/admin}">Панель управления</a>
+            </li>
+        </ul>
+        <form class="form-inline" data-th-if="${#authorization.expression('isAnonymous()')}">
+            <a class="btn btn-outline-success" data-th-href="@{/login}" >Войти</a>
+        </form>
+        <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}">
+            <input class="form-control mr-sm-2" type="search" data-th-value="${search}" name="search" placeholder="Поиск" aria-label="Search" >
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+        </form>
 
-  <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}">
-    <input class="form-control mr-sm-2" type="search" data-th-value="${search}" name="search" placeholder="Поиск" aria-label="Search" >
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
-  </form>
-
-  <form class="form-inline" data-th-if="${#authorization.expression('isAnonymous()')}">
-      <a class="btn btn-sm btn-outline-secondary mr-sm-2" data-th-href="@{/register}">Зарегистрироваться</a>
-      <a class="btn btn-outline-success" data-th-href="@{/login}" >Войти</a>
-  </form>
-
-  <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
-       <button class="btn btn-outline-danger">Выйти</button>
-  </form>
+            <form class="form-inline" data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+                <button class="btn btn-outline-danger">Выйти</button>
+            </form>
+    </div>
 </nav>
-
 
 <div class="container">
     <div class="row">
         <div class="col">
-            <div align="right">
-
-                <form class="btn btn-link"
-                        data-th-if="${#authorization.expression('isAuthenticated()')}"
-                        data-th-action="@{/logout}" method="post">
-                    <button>Выйти</button>
-                </form>
-                <div class="btn-group" role="group" aria-label="Basic example">
-                   <a class="btn btn-link" data-th-if="${#authorization.expression('isAuthenticated()')}"
-                       data-th-href="@{/personalArea}">Личный кабинет</a>
-                   <a class="btn btn-link" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
-                       data-th-href="@{/admin}">Панель управления</a>
-                </div>
-            </div>
-
-            <h1 align="center">Добро пожаловать</h1>
-
+          <h1 align="center">Добро пожаловать</h1>
         </div>
     </div>
 </div>
-
-<div class="container">
-    <div class="row">
-    <div class="col-md-6">
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown button
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
-      </div>
-    </div>
-
-</div>
-    </div>
-    </div>
 
 
 <div class="container">

@@ -1,31 +1,113 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Регистрация</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <style>
+        body {
+            display: flex;
+            min-height: 150vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        body {
+            background: #fff;
+        }
+
+        .input-field input[type=date]:focus + label,
+        .input-field input[type=text]:focus + label,
+        .input-field input[type=email]:focus + label,
+        .input-field input[type=password]:focus + label {
+            color: #e91e63;
+        }
+
+        .input-field input[type=date]:focus,
+        .input-field input[type=text]:focus,
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus {
+            border-bottom: 2px solid #e91e63;
+            box-shadow: none;
+        }
+        #username {
+            width: 300px;
+        }
+        #password {
+            width: 300px;
+        }
+        #password2 {
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
-<div data-th-if="error">
-    [[ ${error} ]]
-</div>
-<div class="container">
-    <div class="row">
-           <div aligh="center" class="col">
-                    <form  data-th-action="@{/register}" method="post">
-                                <div >
-                                            <input name="username" placeholder="Логин" required>
-                                            <input name="password" type="password" placeholder="Пароль" required>
-                                            <input name="confirm" type="password" placeholder="Подтверждение пароля" required>
-                                        <button>Регистрация</button>
-                                </div>
-                    </form>
-           </div>
-    </div>
-</div>
+
+<div class="section"></div>
+<main>
+    <center>
+        <img class="responsive-img" style="width: 250px;" src="https://i.imgur.com/ax0NCsK.gif" />
+        <div class="section"></div>
+
+        <h5 class="indigo-text"> Регистрация</h5>
+        <div class="section"></div>
+
+        <div class="container">
+            <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                <form data-th-action="@{/register}" class="col s12" method="post">
+                    <div class='row'>
+                        <div class='col s12'>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type="text" name='username' id='username' required />
+                            <label for='username'>Имя пользователя</label>
+
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='password' id='password' required/>
+                            <label for='password'>Пароль</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='confirm' id='password2' required/>
+                            <label for='password2'>Подтверждение пароля</label>
+                            <span class="helper-text red-text" data-error="wrong" data-success="right" data-th-if="error">[[ ${error} ]]</span>
+                        </div>
+                    </div>
+
+                    <br />
+                    <center>
+                        <div class='row'>
+                            <button type='submit' name='btn_login' class='col s12 btn btn-large  waves-effect waves-light' >Зарегистрироваться</button>
+                        </div>
+                    </center>
+                </form>
+            </div>
+        </div>
+    </center>
+
+    <div class="section"></div>
+    <div class="section"></div>
+</main>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
 </body>
 </html>

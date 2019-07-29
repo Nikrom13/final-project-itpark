@@ -106,7 +106,7 @@ public class UserRepository {
             Map.of(
                     "user_id", user.getId(),
                     "username", user.getUsername(),
-                    "password", user.getPassword(), // пароль уже должен быть шифрованный
+                    "password", user.getPassword(),
                     "enabled", user.isEnabled(),
                     "account_non_expired", user.isAccountNonExpired(),
                     "account_non_locked", user.isAccountNonLocked(),
