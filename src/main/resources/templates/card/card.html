@@ -1,45 +1,214 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Card page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root{
+            --primary:#03A9F4;
+            --secondary:#29B6F6;
+            --terciary:#B2EBF2;
+        }
+
+        nav{
+            padding: 0 10px 0 10px;
+            background-color: var(--primary);
+        }
+
+        nav .right{
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+
+
+        .nav-wrapper form{
+            margin: auto;
+            width: 50%;
+        }
+
+        .nav-wrapper .exit-button{
+            top: -2px;
+            right: 20px;
+        }
+
+        nav .right img{
+            margin: 17px;
+            height: 30px;
+            width: 30px;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        nav .right .imgProfil a{
+            height: 64px;
+        }
+        #width-card {
+            width: 800px;
+            word-wrap: break-word;
+        }
+
+        #text-in-card{
+            word-wrap: break-word;
+        }
+
+
+        #first {
+            width: 200px; /* Ширина левой колонки */
+            float: left;
+        }
+        #second {
+            width: 300px; /* Ширина правой колонки */
+            float: right;
+        }
+        #third {
+            margin: 0 300px 0 200px; /* Отступ на ширину левой и правой колонки*/
+        }
+
+        #card-image {
+            height: 200px;
+            width: 300px; /* Ширина правой колонки */
+            margin-left: 19px;
+            margin-top: 19px;
+            margin-bottom: 19px;
+        }
+
+        .icon {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .bx--form-item {
+            margin-bottom: 1.5rem;
+        }
+    </style>
 </head>
 <body>
 
-<h5 align="center"> Текущая карта</h5>
+<nav>
+    <div class="nav-wrapper">
+        <a data-th-href="@{/back}" class="brand-logo">РомБанк</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a data-th-href="@{/back}" class="waves-effect waves-light btn">Вернуться к списку карт</a></li>
+            <li><a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                   data-th-href="@{/admin}">Панель управления</a></li>
+            <li><a data-th-if="${#authorization.expression('isAuthenticated()')}"
+                   data-th-href="@{/personalArea}">Личный кабинет</a></li>
+            <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('isAnonymous()')}" data-th-href="@{/login}" >Войти</a></li>
+            <li>
+                <form  data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+                    <button class=" exit-button waves-effect waves-light btn">Выйти</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<h5 align="center"> Подробное описание </h5>
+
 
 <div class="container">
-    <div class="col">
-        <div class="card mb-4" style="max-width: 540px;">
-            <div class="row no-gutters ">
-                <div class="col-md-4">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPtrPDdWd_X5VP2lYeiRIyI72CCM_aKk-eaMuo0rypMqALC8b"
-                         class="card-img" style="width: 12rem;">
+    <div class="col s12 m7">
+        <h2 class="header">[[${card.getCardname()}]]</h2>
+        <div class="card horizontal" id="width-card">
+            <div class="card-image">
+                <img id="card-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPtrPDdWd_X5VP2lYeiRIyI72CCM_aKk-eaMuo0rypMqALC8b">
+            </div>
+            <div class="card-stacked" >
+                <div class=" card-content" id="text-in-card">
+                    <p>Процентная ставка: [[${card.getRate()}]]</p>
+                    <p>Оисание: [[${card.getDescription()}]]</p>
                 </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Cardname: [[${card.getCardname()}]]</h5>
-                        <p class="card-text">Card rate (%): [[${card.getRate()}]]</p>
-                        <p class="card-text">Card description: [[${card.getDescription()}]]</p>
-                    </div>
+                <div class="card-action">
+                    <a data-th-href="@{/reg-card/{id}(id=${card.getId()})}" class="waves-effect waves-light btn right">Перейти к оформлению</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<form data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-action="@{/remove/{id}(id = ${card.getId()})}" method="post">
-    <button class="btn btn-danger">Remove Card </button>
-</form>
+    <div class="container" >
+        <div id="first">
+            <a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
+               class="waves-effect waves-light btn modal-trigger" href="#modal2">Удалить карту </a>
+        </form>
+        </div>
+        <div id="third">
+               <a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
+               class="waves-effect waves-light btn modal-trigger" href="#modal1">Редактировать</a>
+        </div>
+        <div id="second">
 
-<a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-href="@{/edit/{id}(id = ${card.getId()})}" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
 
-<a data-th-href="@{/back}" class="btn btn-primary">Back to card list</a>
-<a data-th-href="@{/reg-card/{id}(id=${card.getId()})}" class="btn btn-primary">Registration card</a>
+<div id="modal1" class="modal">
+    <div class="row">
+        <form class="col s12" data-th-action="@{/edit/{id}(id=${card.getId()})}" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input name="name" id="input_text" type="text" data-length="15" data-th-value="${card.getCardname()}" required>
+                    <label for="input_text">Название карты</label>
+                </div>
+                <div class="input-field col s6">
+                    <input name="rate" id="input_text1" type="text" data-length="2" data-th-value="${card.getRate()}" required>
+                    <label for="input_text1">Процентная ставка</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <div class="input-field col s12">
+                        <textarea name="description" id="textarea2" class="materialize-textarea" data-length="300">[[${card.getDescription()}]]</textarea>
+                        <label for="textarea2">Описание</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="btn waves-effect waves-light right" type="submit">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal2" class="modal">
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <a class="waves-effect waves-light btn  icon right" data-th-href="@{/card/{id}(id=${card.getId()})}" ><i class="material-icons">close</i></a>
+                <div class="modal-content">
+                    <h4>Вы уверены?</h4>
+                    <p>Удаление понесет за собой необратимые последсвия!</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="modal-content">
+                </div>
+            </div>
+            <form data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-action="@{/remove/{id}(id = ${card.getId()})}" method="post">
+                <button class="waves-effect waves-light btn red darken-4" >Удалить карту</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function(){  $('.modal').modal();
+    });
+</script>
+<script >
+    $(document).ready(function() {
+        $('input#input_text, textarea#textarea2').characterCounter();
+    });
+</script>
 </body>
 </html>

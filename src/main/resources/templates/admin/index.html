@@ -8,7 +8,7 @@
     <title>Admin page</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <style>
             :root{
@@ -65,7 +65,7 @@
 
 <nav>
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo">РомБанк</a>
+      <a data-th-href="@{/back}" class="brand-logo">РомБанк</a>
       <form data-th-if="${#authorization.expression('isAuthenticated()')}">
             <div class="input-field">
                 <input id="search" type="search" name="search" data-th-value="${search}" >
@@ -95,8 +95,8 @@
          <label for="input_text">Название карты</label>
          </div>
           <div class="input-field col s6">
-           <input name="rate" id="input_text" type="text" data-length="2" required>
-           <label for="input_text">Процентная ставка</label>
+           <input name="rate" id="input_text1" type="text" data-length="2" required>
+           <label for="input_text1">Процентная ставка</label>
           </div>
          </div>
          <div class="row">

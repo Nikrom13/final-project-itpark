@@ -1,31 +1,117 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
              <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
                          <meta http-equiv="X-UA-Compatible" content="ie=edge">
              <title>Document</title>
-              <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-                                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root{
+            --primary:#03A9F4;
+            --secondary:#29B6F6;
+            --terciary:#B2EBF2;
+        }
+
+        nav{
+            padding: 0 10px 0 10px;
+            background-color: var(--primary);
+        }
+
+        nav .right{
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+
+
+        .nav-wrapper form{
+            margin: auto;
+            width: 50%;
+        }
+
+        .nav-wrapper .exit-button{
+            top: -2px;
+            right: 20px;
+        }
+
+        .nav-wrapper .input-field{
+            padding-top: 7px;
+        }
+
+        .nav-wrapper form #search{
+            height: 50px;
+        }
+
+        nav .right img{
+            margin: 17px;
+            height: 30px;
+            width: 30px;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        nav .right .imgProfil a{
+            height: 64px;
+        }
+
+        #card {
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-      <div class="col">
-          <form>
-               <div class="row mt-3">
-                  <div align="center" class="card text-white" data-th-each="card : ${usercards}">
-                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPtrPDdWd_X5VP2lYeiRIyI72CCM_aKk-eaMuo0rypMqALC8b"
-                           class="card-img"
-                           style="width: 18rem;">
-                          <div class="card-img-overlay">
-                              <h5 class="card-title">[[${card.getCardname()}]]</h5>
-                              <p class="card-text">[[${card.getDescription()}]]</p>
-                              <p class="card-text">[[${card.getRate()}]]</p>
-                          </div>
-                  </div>
-              </div>
-          </form>
-      </div>
-  </div>
+<nav>
+    <div class="nav-wrapper">
+        <a data-th-href="@{/back}" class="brand-logo">РомБанк</a>
+        <form data-th-if="${#authorization.expression('isAuthenticated()')}">
+            <div class="input-field">
+                <input id="search" type="search" name="search" data-th-value="${search}" >
+                <label class="label-icon" for="search"><i class="material-icons" >search</i></label>
+                <i class="material-icons">close</i>
+            </div>
+        </form>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
+                   data-th-href="@{/admin}">Панель управления</a></li>
+            <li><a data-th-if="${#authorization.expression('isAuthenticated()')}"
+                   data-th-href="@{/personalArea}">Личный кабинет</a></li>
+            <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('isAnonymous()')}" data-th-href="@{/login}" >Войти</a></li>
+            <li>
+                <form  data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+                    <button class=" exit-button waves-effect waves-light btn">Выйти</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row"  >
+        <div class="col 17 m4 s4" data-th-each="card : ${usercards}" data-th-if="${usercards}" >
+            <div class="card sticky-action" id="card">
+                <div class="card-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPtrPDdWd_X5VP2lYeiRIyI72CCM_aKk-eaMuo0rypMqALC8b">
+                    <span class="card-title">[[${card.getCardname()}]]</span>
+                    <a class="btn red btn-floating halfway-fab pulse activator">+</a>
+                </div>
+                <div class="card-content">
+                    <p>Процентная ставка: [[${card.getRate()}]]</p>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title">Дополнительная информация <i class="right">x</i></span>
+                    <p>[[${card.getDescription()}]]</p>
+                </div>
+                <div class="card-action">
+                    <a data-th-href="@{/card/{id}(id=${card.getId()})}">ОФОРМЛЕНИЕ КАРТЫ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
