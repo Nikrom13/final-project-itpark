@@ -27,8 +27,8 @@ public class UserRepository {
 
   public User findByUsername(String username) {
     User user = template.queryForObject(
-            "SELECT id, username, password, enabled, account_non_expired, account_non_locked, account_non_expired, credentials_non_expired " +
-                    "FROM users WHERE username = :username",
+            "SELECT id, username, password, first_name, second_name,country, city, address,phone_number, second_phone_number, " +
+                    "enabled, account_non_expired, account_non_locked, account_non_expired, credentials_non_expired FROM users WHERE username = :username",
             Map.of("username", username),
             new RowMapper<User>() {
               @Override
@@ -37,6 +37,13 @@ public class UserRepository {
                         rs.getInt("id"),
                         rs.getString("username"),
                         rs.getString("password"),
+                        rs.getString("first_name"),
+                        rs.getString("second_name"),
+                        rs.getString("country"),
+                        rs.getString("city"),
+                        rs.getString("address"),
+                        rs.getString("phone_number"),
+                        rs.getString("second_phone_number"),
                         Collections.emptyList(),
                         rs.getBoolean("enabled"),
                         rs.getBoolean("account_non_expired"),
@@ -75,6 +82,10 @@ public class UserRepository {
       params.addValues(Map.of(
               "username", user.getUsername(),
               "password", user.getPassword(),
+              "first_name", user.getFirstName(),
+              "second_name", user.getSecondName(),
+              "country", user.getCountry(),
+              "city", user.getCity(),
               "enabled", user.isEnabled(),
               "account_non_expired", user.isAccountNonExpired(),
               "account_non_locked", user.isAccountNonLocked(),
@@ -82,7 +93,7 @@ public class UserRepository {
       ));
 
       template.update(
-              "INSERT INTO users (username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (:username, :password, :enabled, :account_non_expired, :account_non_locked, :credentials_non_expired)",
+              "INSERT INTO users (username, password, first_name, second_name,country, city, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (:username, :password, :first_name, :second_name, :country, :city, :enabled, :account_non_expired, :account_non_locked, :credentials_non_expired)",
               params,
               keyHolder
       );

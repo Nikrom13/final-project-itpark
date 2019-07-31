@@ -115,17 +115,10 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
 </head>
 <body>
 
-<nav>
+<nav class="nav-extended">
     <div class="nav-wrapper">
       <a data-th-href="@{/back}" class="brand-logo">РомБанк</a>
-      <form data-th-if="${#authorization.expression('isAuthenticated()')}">
-            <div class="input-field">
-                <input id="search" type="search" name="search" data-th-value="${search}" >
-                   <label class="label-icon" for="search"><i class="material-icons" >search</i></label>
-                   <i class="material-icons">close</i>
-            </div>
-      </form>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
+       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}"
                                   data-th-href="@{/admin}">Панель управления</a></li>
         <li><a data-th-if="${#authorization.expression('isAuthenticated()')}"
@@ -138,13 +131,21 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
         </li>
       </ul>
     </div>
+    <div class="nav-content">
+                <ul class="tabs tabs-transparent">
+                  <li class="tab"><a class="active" href="#profile">Профиль</a></li>
+                  <li class="tab"><a class="active" href="#cards">Мои карты</a></li>
+                  <li class="tab"><a class="active" href="#personal-data">Персональные данные</a></li>
+                </ul>
+     </div>
  </nav>
 
+<div id="profile">
 <section class="profile">
   <header class="header">
     <div class="details">
-      <img src="https://image.flaticon.com/icons/png/512/64/64572.png" alt="${user.getUsername()}" class="profile-pic">
-      <h1 class="heading">[[${user.getUsername()}]]</h1>
+      <img src="https://image.flaticon.com/icons/png/512/64/64572.png" alt="${user.getFirstName()}" class="profile-pic">
+      <h1 class="heading">[[${user.getFirstName()}]] [[${user.getSecondName()}]]</h1>
         <div class="stats">
         <div class="col-4">
           <h4>20</h4>
@@ -162,10 +163,84 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
     </div>
   </header>
 </section>
+</div>
 
-<a class="waves-effect waves-light btn right" data-th-href="@{/user-cards}">Мои карты</a>
+<div id="cards">
+<div class="container">
+    <div class="row"  >
+        <div class="col 17 m4 s4" data-th-each="card : ${usercards}" data-th-if="${usercards}" >
+            <div class="card sticky-action" id="card">
+                <div class="card-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPtrPDdWd_X5VP2lYeiRIyI72CCM_aKk-eaMuo0rypMqALC8b">
+                    <span class="card-title">[[${card.getCardname()}]]</span>
+                    <a class="btn red btn-floating halfway-fab pulse activator">+</a>
+                </div>
+                <div class="card-content">
+                    <p>Процентная ставка: [[${card.getRate()}]]</p>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title">Дополнительная информация <i class="right">x</i></span>
+                    <p>[[${card.getDescription()}]]</p>
+                </div>
+                <div class="card-action">
+                    <a data-th-href="@{/card/{id}(id=${card.getId()})}">ОФОРМЛЕНИЕ КАРТЫ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div id="personal-data">
+<div class="row">
+        <form class="col s11">
+            <div class="row">
+              <div class="input-field col s6" >
+                 <input disabled data-th-value="${user.getFirstName()}" id="first-name" type="text" class="black-text" placeholder="Необходимо заполнить" required>
+                 <label class="pink-text" for="first-name">Имя</label>
+              </div>
+              <div class="input-field col s6">
+                 <input disabled data-th-value="${user.getSecondName()}"  id="second-name" type="text" class="black-text" placeholder="Необходимо заполнить" required>
+                 <label class="pink-text" for="second-name">Фамилия</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                 <input disabled data-th-value="${user.getCountry()}"  id="country" type="text" class="black-text" placeholder="Необходимо заполнить" required>
+                 <label class="pink-text" for="country">Страна</label>
+              </div>
+              <div class="input-field col s6">
+                 <input disabled data-th-value="${user.getCity()}"   id="city" type="text" class="black-text" placeholder="Необходимо заполнить" required>
+                 <label class="pink-text" for="city">Город</label>
+              </div>
+            </div>
+           <div class="row">
+             <div class="input-field col s12">
+                <input disabled data-th-value="${user.getAddress()}"  id="address" type="text" class="black-text" placeholder="Необходимо заполнить" required>
+                <label class="pink-text" for="address">Улица, дом</label>
+             </div>
+           </div>
+             <div class="row">
+                <div class="input-field col s6">
+                  <input disabled data-th-value="${user.getPhoneNumber()}"   id="icon_telephone" type="tel"  class="black-text" placeholder="Необходимо заполнить" required>
+                  <label class="pink-text" for="icon_telephone">Телефон</label>
+                </div>
+                <div class="input-field col s6">
+                  <input disabled data-th-value="${user.getSecondPhoneNumber()}"   id="icon_telephone" type="tel" class="black-text" placeholder="Необходимо заполнить"  >
+                  <label class="pink-text" for="icon_telephone">Доп. Телефон</label>
+                </div>
+             </div>
+         </form>
+    </div>
+</div>
+
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+<script >
+$(document).ready(function(){
+    $('.tabs').tabs();
+  });
+</script>
 </body>
 </html>

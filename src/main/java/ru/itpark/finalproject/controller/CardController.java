@@ -9,6 +9,7 @@ import ru.itpark.finalproject.domain.Card;
 import ru.itpark.finalproject.domain.User;
 import ru.itpark.finalproject.domain.UserCards;
 import ru.itpark.finalproject.dto.CardAdd;
+import ru.itpark.finalproject.dto.UserInfo;
 import ru.itpark.finalproject.service.CardService;
 
 import java.util.Collection;
@@ -52,17 +53,11 @@ public class CardController {
     }
 
     @PostMapping("/reg-card/{id}")
-    public String registrationCard(@PathVariable int id){
+    public String registrationCard(@PathVariable int id, @ModelAttribute UserInfo data){
         var card = service.findById(id);
-        service.registerCard(card);
-        return "redirect:/";
+        service.registerCard(card, data);
+        return "redirect:/card/{id}";
     }
 
-    @GetMapping("/user-cards")
-    public String userCards(Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("usercards", service.findUserCards(user.getId()));
-        return "user/user-cards";
-    }
 
 }
