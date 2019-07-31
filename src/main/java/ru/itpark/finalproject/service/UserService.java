@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itpark.finalproject.domain.Registration;
 import ru.itpark.finalproject.domain.User;
+import ru.itpark.finalproject.dto.UserInfo;
 import ru.itpark.finalproject.repository.UserRepository;
 
 import java.sql.Array;
@@ -87,5 +89,23 @@ public class UserService implements UserDetailsService {
 
   public List<User> findByRequest(String search) {
     return repository.findByRequest(search);
+  }
+
+  public void changeProfileData(UserInfo userInfo) {
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    int id = user.getId();
+    template.update("UPDATE users SET first_name = :first_name, second_name = :second_name, country = :country , city = :city, address = :address," +
+                    " phone_number = :phone_number, second_phone_number = :second_phone_number WHERE id = :id",
+            Map.of(
+                    "id", id,
+                    "first_name", userInfo.getFirstName(),
+                    "second_name", userInfo.getSecondName(),
+                    "country",userInfo.getCountry(),
+                    "city",userInfo.getCity(),
+                    "address",userInfo.getAddress(),
+                    "phone_number",userInfo.getPhoneNumber(),
+                    "second_phone_number",userInfo.getSecondPhoneNumber()
+            )
+    );
   }
 }

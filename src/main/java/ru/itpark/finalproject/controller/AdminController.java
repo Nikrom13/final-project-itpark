@@ -36,8 +36,6 @@ public class AdminController {
     }
 
 
-
-
     @GetMapping("/sort")
     public String sort(Model model) {
         model.addAttribute("cards", service.sortByRate());

@@ -147,19 +147,7 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
       <img src="https://image.flaticon.com/icons/png/512/64/64572.png" alt="${user.getFirstName()}" class="profile-pic">
       <h1 class="heading">[[${user.getFirstName()}]] [[${user.getSecondName()}]]</h1>
         <div class="stats">
-        <div class="col-4">
-          <h4>20</h4>
-          <p>Reviews</p>
         </div>
-        <div class="col-4">
-          <h4>10</h4>
-          <p>Communities</p>
-        </div>
-        <div class="col-4">
-          <h4>100</h4>
-          <p>Discussions</p>
-        </div>
-      </div>
     </div>
   </header>
 </section>
@@ -183,7 +171,7 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
                     <p>[[${card.getDescription()}]]</p>
                 </div>
                 <div class="card-action">
-                    <a data-th-href="@{/card/{id}(id=${card.getId()})}">ОФОРМЛЕНИЕ КАРТЫ</a>
+                    <a     class="waves-effect waves-light btn modal-trigger" href="#modal2">Баланс </a>
                 </div>
             </div>
         </div>
@@ -193,6 +181,7 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
 
 <div id="personal-data">
 <div class="row">
+        <a  class="waves-effect waves-light btn modal-trigger" href="#modal3">Редактировать </a>
         <form class="col s11">
             <div class="row">
               <div class="input-field col s6" >
@@ -235,12 +224,27 @@ background: linear-gradient(to right, #ec2F4B, #009FFF);
 </div>
 
 
+
+
+
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 <script >
 $(document).ready(function(){
     $('.tabs').tabs();
   });
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function(){  $('.modal').modal();
+    });
+</script>
+<script >
+    $(document).ready(function() {
+        $('input#input_text, textarea#textarea2').characterCounter();
+    });
 </script>
 </body>
 </html>
