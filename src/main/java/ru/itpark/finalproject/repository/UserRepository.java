@@ -24,13 +24,38 @@ import java.util.Map;
 public class UserRepository {
   private final NamedParameterJdbcTemplate template;
 
+  public List<User> findAllUsers() {
+
+        return template.query(
+                "SELECT id, username, password, first_name, second_name,country, city, address,phone_number, second_phone_number, " +
+                        "enabled, account_non_expired, account_non_locked, account_non_expired, credentials_non_expired FROM users",
+                (rs, i) -> new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("first_name"),
+                        rs.getString("second_name"),
+                        rs.getString("country"),
+                        rs.getString("city"),
+                        rs.getString("address"),
+                        rs.getString("phone_number"),
+                        rs.getString("second_phone_number"),
+                        Collections.emptyList(),
+                        rs.getBoolean("enabled"),
+                        rs.getBoolean("account_non_expired"),
+                        rs.getBoolean("account_non_locked"),
+                        rs.getBoolean("credentials_non_expired"),
+                        new LinkedList<>()
+                )
+        );
+    }
 
   public User findByUsername(String username) {
     User user = template.queryForObject(
             "SELECT id, username, password, first_name, second_name,country, city, address,phone_number, second_phone_number, " +
                     "enabled, account_non_expired, account_non_locked, account_non_expired, credentials_non_expired FROM users WHERE username = :username",
             Map.of("username", username),
-            new RowMapper<User>() {
+            new RowMapper< User>() {
               @Override
               public User mapRow(ResultSet rs, int i) throws SQLException {
                 return new User(
@@ -82,10 +107,6 @@ public class UserRepository {
       params.addValues(Map.of(
               "username", user.getUsername(),
               "password", user.getPassword(),
-              "first_name", user.getFirstName(),
-              "second_name", user.getSecondName(),
-              "country", user.getCountry(),
-              "city", user.getCity(),
               "enabled", user.isEnabled(),
               "account_non_expired", user.isAccountNonExpired(),
               "account_non_locked", user.isAccountNonLocked(),
@@ -93,7 +114,7 @@ public class UserRepository {
       ));
 
       template.update(
-              "INSERT INTO users (username, password, first_name, second_name,country, city, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (:username, :password, :first_name, :second_name, :country, :city, :enabled, :account_non_expired, :account_non_locked, :credentials_non_expired)",
+              "INSERT INTO users (username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired) VALUES (:username, :password, :enabled, :account_non_expired, :account_non_locked, :credentials_non_expired)",
               params,
               keyHolder
       );
@@ -140,4 +161,31 @@ public class UserRepository {
       );
     }
   }
+
+    public List<User> findByRequest(String search) {
+
+        return template.query(
+                "SELECT id, username, password, first_name, second_name,country, city, address,phone_number, second_phone_number, " +
+                        "enabled, account_non_expired, account_non_locked, account_non_expired, credentials_non_expired FROM users WHERE  LOWER (username) LIKE :search",
+                Map.of("search", "%"+search.toLowerCase()+"%"),
+                (rs, i) -> new User(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("first_name"),
+                        rs.getString("second_name"),
+                        rs.getString("country"),
+                        rs.getString("city"),
+                        rs.getString("address"),
+                        rs.getString("phone_number"),
+                        rs.getString("second_phone_number"),
+                        Collections.emptyList(),
+                        rs.getBoolean("enabled"),
+                        rs.getBoolean("account_non_expired"),
+                        rs.getBoolean("account_non_locked"),
+                        rs.getBoolean("credentials_non_expired"),
+                        new LinkedList<>()
+                )
+        );
+    }
 }

@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS cards
 (
     id          INTEGER PRIMARY KEY AUTO_INCREMENT,
     cardname    VARCHAR(255) NOT NULL,
-    rate        INTEGER      NOT NULL CHECK (rate >= 0),
+    rate        INTEGER      NOT NULL CHECK (rate >= 0) AND (rate <= 100),
     description TEXT         NOT NULL
 );
 

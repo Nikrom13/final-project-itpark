@@ -46,6 +46,8 @@
         #password2 {
             width: 300px;
         }
+
+
     </style>
 </head>
 <body>
@@ -87,8 +89,12 @@
                         <div class='input-field col s12'>
                             <input class='validate' type='password' name='confirm' id='password2' required/>
                             <label for='password2'>Подтверждение пароля</label>
-                            <span class="helper-text red-text" data-error="wrong" data-success="right" data-th-if="error">[[ ${error} ]]</span>
-                        </div>
+
+                         </div>
+                    </div>
+                    <p  class="helper-text red-text " data-th-if="error">[[ ${error} ]]</p>
+                    <div class="row">
+
                     </div>
 
                     <br />

@@ -47,7 +47,6 @@ public class UserService implements UserDetailsService {
                 return resultSet.getString("username");
               }
             }
-//            (rs, i) -> rs.getString("username")
     );
 
     if (names.contains(data.getUsername())) {
@@ -63,13 +62,13 @@ public class UserService implements UserDetailsService {
             0,
             data.getUsername(),
             passwordEncoder.encode(data.getPassword()),
-            "no",
-            "no",
-            "no",
-            "no",
-            "no",
-            "no",
-            "no",
+            "нет записи",
+            "нет записи",
+            "нет записи",
+            "нет записи",
+            "нет записи",
+            "нет записи",
+            "нет записи",
             List.of(new SimpleGrantedAuthority("ROLE_USER")),
             true,
             true,
@@ -82,4 +81,11 @@ public class UserService implements UserDetailsService {
   }
 
 
+    public List<User> findAllUsers() {
+      return repository.findAllUsers();
+    }
+
+  public List<User> findByRequest(String search) {
+    return repository.findByRequest(search);
+  }
 }

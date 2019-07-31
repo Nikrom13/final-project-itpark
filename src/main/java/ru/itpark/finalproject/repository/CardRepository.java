@@ -76,7 +76,7 @@ public class CardRepository {
     }
 
     public List<Card> findByRequest(String search) {
-        return template.query("SELECT id, cardname, rate, description FROM cards WHERE LOWER (cardname) LIKE :search",
+        List<Card>  cards =  template.query("SELECT id, cardname, rate, description FROM cards WHERE LOWER (cardname) LIKE :search",
                 Map.of("search", "%"+search.toLowerCase()+"%"),
                 (rs, i) -> new Card(
                         rs.getInt("id"),
@@ -86,6 +86,9 @@ public class CardRepository {
                 )
         );
 
+
+
+        return cards;
     }
 
     public List<Card> findUserCards(int id) {

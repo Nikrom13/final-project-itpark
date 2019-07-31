@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin page</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <style>
+            :root{
+                --primary:#03A9F4;
+                --secondary:#29B6F6;
+                --terciary:#B2EBF2;
+            }
+
+            nav{
+                padding: 0 10px 0 10px;
+                background-color: var(--primary);
+            }
+
+            nav .right{
+                position: absolute;
+                top: 0px;
+                right: 0px;
+            }
+
+            .nav-wrapper .exit-button{
+                        top: -2px;
+                        right: 20px;
+            }
+
+            .nav-wrapper form{
+                margin: auto;
+                width: 50%;
+            }
+
+            .nav-wrapper .input-field{
+                padding-top: 7px;
+            }
+
+            .nav-wrapper form #search{
+                height: 50px;
+            }
+
+            nav .right img{
+                margin: 17px;
+                height: 30px;
+                width: 30px;
+                border: 2px solid white;
+                cursor: pointer;
+            }
+
+            nav .right .imgProfil a{
+                height: 64px;
+            }
+
+            #dl {
+                width: 150px;
+            }
+        </style>
+  </head>
+<body>
+
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+      <a data-th-href="@{/back}" class="brand-logo">РомБанк</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a class="waves-effect waves-light btn " data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-href="@{/admin}">Список карт</a></li>
+        <li><a data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-href="@{/personalArea}">Личный кабинет</a></li>
+        <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('isAnonymous()')}" data-th-href="@{/login}" >Войти</a></li>
+        <li>
+           <form  data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-action="@{/logout}" method="post">
+            <button class=" exit-button waves-effect waves-light btn">Выйти</button>
+           </form>
+        </li>
+      </ul>
+    </div>
+</nav>
+
+
+
+
+                <div class="container">
+                  <form data-th-action="@{/userSearch}"  data-th-if="${#authorization.expression('isAuthenticated()')}">
+                   <div class="input-field">
+                       <input id="search" type="search" name="search" data-th-value="${userSearch}" placeholder="Поиск" >
+                       <i class="material-icons">close</i>
+                   </div>
+                </form>
+                 <table >
+                   <thead>
+                     <tr>
+                         <th>Имя пользователя</th>
+                         <th>Имя</th>
+                         <th>Фамилия</th>
+                         <th>Адрес</th>
+                         <th>Номер телефона</th>
+                         <th>Доп. номер</th>
+                     </tr>
+                   </thead>
+
+                   <tbody data-th-each="user : ${users}" data-th-if="${users}">
+                     <tr>
+                       <td>[[${user.getUsername()}]]</td>
+                       <td>[[${user.getFirstName()}]]</td>
+                       <td>[[${user.getSecondName()}]]</td>
+                       <td>[[${user.getCountry()}]] [[${user.getCity()}]] [[${user.getAddress()}]]</td>
+                       <td>[[${user.getPhoneNumber()}]]</td>
+                       <td>[[${user.getSecondPhoneNumber()}]]</td>
+                     </tr>
+                    </tbody>
+                 </table>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $('.modal').modal();
+      });
+    </script>
+    <script >
+    $(document).ready(function() {
+    $('input#input_text, textarea#textarea2').characterCounter();
+    });
+    </script>
+</body>
+</html>

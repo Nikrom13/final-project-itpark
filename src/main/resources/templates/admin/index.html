@@ -58,22 +58,18 @@
                 height: 64px;
             }
 
-
+            #dl {
+                width: 150px;
+            }
         </style>
   </head>
 <body>
 
-<nav>
+<nav class="nav-extended">
     <div class="nav-wrapper">
       <a data-th-href="@{/back}" class="brand-logo">РомБанк</a>
-      <form data-th-if="${#authorization.expression('isAuthenticated()')}">
-            <div class="input-field">
-                <input id="search" type="search" name="search" data-th-value="${search}" >
-                   <label class="label-icon" for="search"><i class="material-icons" >search</i></label>
-                   <i class="material-icons">close</i>
-            </div>
-      </form>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" data-th-href="@{/user-list}" >Список пользоватлей</a></li>
         <li><a class="waves-effect waves-light btn modal-trigger" data-th-if="${#authorization.expression('hasRole(''ADMIN'')')}" href="#modal1"  >Добавить карту</a></li>
         <li><a data-th-if="${#authorization.expression('isAuthenticated()')}" data-th-href="@{/personalArea}">Личный кабинет</a></li>
         <li><a class="waves-effect waves-light btn" data-th-if="${#authorization.expression('isAnonymous()')}" data-th-href="@{/login}" >Войти</a></li>
@@ -85,6 +81,36 @@
       </ul>
     </div>
  </nav>
+
+
+    <div class="container">
+        <form data-th-action="@{/cardSearch}"  data-th-if="${#authorization.expression('isAuthenticated()')}">
+                    <div class="input-field">
+                        <input id="search" type="search" name="search" data-th-value="${cardSearch}" placeholder="Поиск" >
+                        <i class="material-icons">close</i>
+                    </div>
+        </form>
+        <a class="waves-effect waves-light btn" data-th-href="@{/sort}" >Сортировать по процентной ставки</a>
+        <table>
+                <thead>
+                  <tr>
+                      <th>Внещний вид</th>
+                      <th>Название</th>
+                      <th>Процентная ставка</th>
+                      <th>Действия</th>
+                  </tr>
+                </thead>
+
+                <tbody data-th-each="card : ${cards}" data-th-if="${cards}">
+                  <tr>
+                    <td id="dl"> <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPtrPDdWd_X5VP2lYeiRIyI72CCM_aKk-eaMuo0rypMqALC8b"> </td>
+                    <td><h3>[[${card.getCardname()}]]</h3></td>
+                    <td><h3> [[${card.getRate()}]] %</h3></td>
+                    <td><a class="waves-effect waves-light btn"  data-th-href="@{/card/{id}(id=${card.getId()})}">Подробнее</a></td>
+                    </tr>
+                </tbody>
+              </table>
+    </div>
 
     <div id="modal1" class="modal">
      <div class="row">

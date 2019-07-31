@@ -12,10 +12,7 @@ import ru.itpark.finalproject.dto.UserInfo;
 import ru.itpark.finalproject.repository.CardRepository;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.PrimitiveIterator;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -84,5 +81,22 @@ public class CardService {
                         "second_phone_number",userInfo.getSecondPhoneNumber()
                 )
         );
+    }
+
+    public List<Card> sortByRate() {
+        List<Card> cards = findAll();
+        cards.sort((o1, o2) -> {
+            if (o1.getRate() == o2.getRate()) {
+                return 0;
+            }
+            if (o1.getRate() > o2.getRate()) {
+                return 1;
+            }
+            else {
+                return -1;
+            }
+        });
+
+        return  cards;
     }
 }
